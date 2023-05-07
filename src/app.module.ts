@@ -3,30 +3,25 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ImageSchema } from './schemas/image.schema';
-import { OrderItem, OrderItemSchema } from './schemas/order-item.schema';
-import { Order, OrderSchema } from './schemas/order.schema';
-import { Product, ProductSchema } from './schemas/product.schema';
-import { Review, ReviewSchema } from './schemas/review.schema';
-import { User, UserSchema } from './schemas/user.schema';
+import { join } from 'path';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      sortSchema: true,
     }),
-    MongooseModule.forRoot('mongodb://localhost/nest'),
-    MongooseModule.forFeature([
-      { name: User.name, schema: UserSchema },
-      { name: Product.name, schema: ProductSchema },
-      { name: Review.name, schema: ReviewSchema },
-      { name: Order.name, schema: OrderSchema },
-      { name: OrderItem.name, schema: OrderItemSchema },
-      { name: Image.name, schema: ImageSchema },
-    ]),
+    TypeOrmModule.forRoot({
+      type: process.env.DATABASE_TYPE as TypeOrmModuleOptions['type'],
+      url: process.env.DATABASE_URL,
+      useNewUrlParser: true,
+      entities: [],
+      synchronize: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
