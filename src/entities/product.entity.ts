@@ -1,16 +1,17 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
+  ObjectIdColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import JSON from 'graphql-type-json';
 
 @Entity()
 @ObjectType()
 export class Product {
-  @PrimaryGeneratedColumn()
+  @ObjectIdColumn()
   @Field(() => ID)
   id: number;
 

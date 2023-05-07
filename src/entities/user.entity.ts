@@ -1,18 +1,19 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ObjectIdColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import JSON from 'graphql-type-json';
 
 @Entity()
 @ObjectType()
 export class User {
-  @PrimaryGeneratedColumn()
+  @ObjectIdColumn()
   @Field(() => ID)
-  id: number;
+  id: string;
 
   @Column()
   @Field()
@@ -35,5 +36,5 @@ export class User {
 
   @Column({ nullable: true, type: 'json' })
   @Field(() => JSON, { nullable: true })
-  extra: Record<string, any>;
+  extra?: Record<string, any>;
 }

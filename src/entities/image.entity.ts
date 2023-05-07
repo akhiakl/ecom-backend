@@ -1,10 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ObjectIdColumn } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import JSON from 'graphql-type-json';
 
 @Entity()
 @ObjectType()
 export class Image {
-  @PrimaryGeneratedColumn()
+  @ObjectIdColumn()
   @Field(() => ID)
   id: number;
 

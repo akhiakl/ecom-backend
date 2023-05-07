@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
+  ObjectIdColumn,
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
@@ -9,11 +9,12 @@ import {
 import { Product } from './product.entity';
 import { User } from './user.entity';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import JSON from 'graphql-type-json';
 
 @Entity()
 @ObjectType()
 export class Review {
-  @PrimaryGeneratedColumn()
+  @ObjectIdColumn()
   @Field(() => ID)
   id: number;
 
