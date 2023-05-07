@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { AppResolver } from './app.resolver';
 
 @Module({
   imports: [
@@ -21,7 +20,6 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
       synchronize: true,
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [AppResolver],
 })
 export class AppModule { }

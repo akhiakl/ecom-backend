@@ -1,22 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppResolver, Hello } from './app.resolver';
 
-describe('AppController', () => {
-  let appController: AppController;
+describe('AppResolver', () => {
+  let appResolver: AppResolver;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [AppService],
+    const moduleRef: TestingModule = await Test.createTestingModule({
+      providers: [AppResolver],
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    appResolver = moduleRef.get<AppResolver>(AppResolver);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  describe('hello', () => {
+    it('should return a Hello object with id and name properties', () => {
+      const result: Hello = appResolver.hello();
+      expect(result).toMatchObject({ id: expect.any(Number), name: 'world' });
     });
   });
 });
