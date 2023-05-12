@@ -7,7 +7,7 @@ import { User } from '@app/entities';
 export class UsersService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-  ) { }
+  ) {}
 
   async findAll(): Promise<User[]> {
     return this.userRepository.find();

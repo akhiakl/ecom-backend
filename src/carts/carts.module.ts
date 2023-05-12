@@ -3,6 +3,6 @@ import { CartsService } from './carts.service';
 import { CartsResolver } from './carts.resolver';
 
 @Module({
-  providers: [CartsResolver, CartsService]
+  providers: [CartsResolver, CartsService],
 })
 export class CartsModule {}

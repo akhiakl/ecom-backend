@@ -9,18 +9,19 @@ export class ProductsService {
   }
 
   findAll() {
-    return `This action returns all products`;
+    return `This action returns all carts`;
   }
 
-  findOne() {
-    return `This action returns a #${id} product`;
+  findOne(id: string) {
+    return `This action returns a #${id} cart`;
   }
 
-  update(, updateProductInput: UpdateProductInput) {
-    return `This action updates a #${id} product`;
+  update(id: string, updateProductInput: UpdateProductInput) {
+    return `This action updates a #${id} cart`;
   }
 
-  remove() {
-    return `This action removes a #${id} product`;
+  remove(id: string) {
+    return `This action removes a #${id} cart`;
   }
+  z;
 }

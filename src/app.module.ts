@@ -34,4 +34,4 @@ import GraphQLJSON from 'graphql-type-json';
     OrdersModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

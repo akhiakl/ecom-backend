@@ -5,9 +5,9 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { Product } from './product.entity';
-import { User } from './user.entity';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import JSON from 'graphql-type-json';
 
@@ -27,12 +27,13 @@ export class Review {
   rating: number;
 
   @ManyToOne(() => Product)
+  @JoinColumn()
   @Field(() => Product)
   product: Product;
 
-  @ManyToOne(() => User)
-  @Field(() => User)
-  user: User;
+  @Column()
+  @Field()
+  userId: string;
 
   @Field(() => Date)
   @CreateDateColumn()

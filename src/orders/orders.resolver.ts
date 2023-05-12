@@ -6,7 +6,7 @@ import { Order } from '@app/entities';
 
 @Resolver(() => Order)
 export class OrdersResolver {
-  constructor(private readonly ordersService: OrdersService) { }
+  constructor(private readonly ordersService: OrdersService) {}
 
   @Mutation(() => Order)
   createOrder(@Args('createOrderInput') createOrderInput: CreateOrderInput) {
