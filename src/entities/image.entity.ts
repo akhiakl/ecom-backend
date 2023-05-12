@@ -7,7 +7,7 @@ import JSON from 'graphql-type-json';
 export class Image {
   @ObjectIdColumn()
   @Field(() => ID)
-  id: number;
+  id: string;
 
   @Column()
   @Field()

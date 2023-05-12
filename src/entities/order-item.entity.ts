@@ -16,7 +16,7 @@ import JSON from 'graphql-type-json';
 export class OrderItem {
   @ObjectIdColumn()
   @Field(() => ID)
-  id: number;
+  id: string;
 
   @ManyToOne(() => Order)
   @Field(() => Order)

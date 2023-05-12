@@ -5,6 +5,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
@@ -15,9 +16,10 @@ import JSON from 'graphql-type-json';
 export class Order {
   @ObjectIdColumn()
   @Field(() => ID)
-  id: number;
+  id: string;
 
   @ManyToOne(() => User)
+  @JoinColumn()
   @Field(() => User)
   user: User;
 

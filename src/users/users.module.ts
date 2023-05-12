@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersResolver } from './users.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from 'src/entities';
+import { User } from '@app/entities';
 
 @Module({
   providers: [UsersResolver, UsersService],
