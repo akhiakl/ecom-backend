@@ -1,14 +1,11 @@
 import {
   Entity,
   Column,
-  ManyToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
   ObjectIdColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Product } from './product.entity';
 import JSON from 'graphql-type-json';
 
 @Entity()
@@ -22,10 +19,9 @@ export class Cart {
   @Field()
   userId: string;
 
-  @ManyToOne(() => Product, { eager: true })
-  @JoinColumn()
-  @Field(() => Product)
-  product: Product;
+  @Column()
+  @Field()
+  productId: string;
 
   @Column({ default: 1 })
   @Field(() => Number)

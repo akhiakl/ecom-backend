@@ -5,7 +5,6 @@ import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
-import { CartModule } from './cart/cart.module';
 import { CartsModule } from './carts/carts.module';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
@@ -28,7 +27,6 @@ import GraphQLJSON from 'graphql-type-json';
       synchronize: true,
     }),
     UsersModule,
-    CartModule,
     CartsModule,
     ProductsModule,
     OrdersModule,

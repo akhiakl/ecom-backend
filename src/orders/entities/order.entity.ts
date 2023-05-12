@@ -2,33 +2,26 @@ import {
   Entity,
   Column,
   ObjectIdColumn,
-  ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Order } from './order.entity';
-import { Product } from './product.entity';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import JSON from 'graphql-type-json';
 
 @Entity()
 @ObjectType()
-export class OrderItem {
+export class Order {
   @ObjectIdColumn()
   @Field(() => ID)
   id: string;
 
-  @ManyToOne(() => Order)
-  @Field(() => Order)
-  order: Order;
-
-  @ManyToOne(() => Product)
-  @Field(() => Product)
-  product: Product;
+  @Column()
+  @Field()
+  userId: string;
 
   @Column()
   @Field()
-  quantity: number;
+  status: string;
 
   @Field(() => Date)
   @CreateDateColumn()
