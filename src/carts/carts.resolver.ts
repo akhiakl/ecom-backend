@@ -9,7 +9,9 @@ export class CartsResolver {
   constructor(private readonly cartsService: CartsService) {}
 
   @Mutation(() => Cart)
-  createCart(@Args('createCartInput') createCartInput: CreateCartInput) {
+  createCart(
+    @Args('input', { nullable: true }) createCartInput?: CreateCartInput,
+  ) {
     return this.cartsService.create(createCartInput);
   }
 
@@ -19,17 +21,19 @@ export class CartsResolver {
   }
 
   @Query(() => Cart, { name: 'cart' })
-  findOne(@Args('id', { type: () => Int }) id: string) {
-    return this.cartsService.findOne(id);
+  findOne(@Args('id') id: string) {
+    console.log({ id });
+
+    return this.cartsService.findById(id);
   }
 
   @Mutation(() => Cart)
-  updateCart(@Args('updateCartInput') updateCartInput: UpdateCartInput) {
+  updateCart(@Args('input') updateCartInput: UpdateCartInput) {
     return this.cartsService.update(updateCartInput.id, updateCartInput);
   }
 
   @Mutation(() => Cart)
-  removeCart(@Args('id', { type: () => Int }) id: string) {
+  removeCart(@Args('id') id: string) {
     return this.cartsService.remove(id);
   }
 }

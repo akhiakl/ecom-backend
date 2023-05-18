@@ -1,26 +1,53 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Cart } from './entities/cart.entity';
 import { CreateCartInput } from './dto/create-cart.input';
 import { UpdateCartInput } from './dto/update-cart.input';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class CartsService {
-  create(createCartInput: CreateCartInput) {
-    return 'This action adds a new cart';
+  constructor(
+    @InjectRepository(Cart)
+    private cartsRepository: Repository<Cart>,
+  ) {}
+
+  async create(createCartInput?: CreateCartInput): Promise<Cart> {
+    const cart = new Cart();
+    cart.name = createCartInput?.name;
+    cart.userId = createCartInput?.userId;
+    // set any other properties as required
+    return await this.cartsRepository.save(cart);
   }
 
-  findAll() {
-    return `This action returns all carts`;
+  async findAll(): Promise<Cart[]> {
+    return await this.cartsRepository.find();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} cart`;
+  async findById(id: string): Promise<Cart> {
+    const cart = await this.cartsRepository.findOneBy({
+      _id: new ObjectId(id),
+    } as any);
+    if (!cart) {
+      throw new NotFoundException(`Cart with ID '${id}' not found`);
+    }
+    return cart;
   }
 
-  update(id: string, updateCartInput: UpdateCartInput) {
-    return `This action updates a #${id} cart`;
+  async update(id: string, updateCartInput: UpdateCartInput): Promise<Cart> {
+    const cart = await this.findById(id);
+    cart.name = updateCartInput.name ?? cart.name;
+    return await this.cartsRepository.save(cart);
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} cart`;
+  async remove(id: string): Promise<void> {
+    console.log({ id });
+
+    const cart = await this.findById(id);
+    console.log({ cart });
+
+    cart.deletedAt = new Date();
+    await this.cartsRepository.save(cart);
   }
 }

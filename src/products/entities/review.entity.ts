@@ -1,23 +1,10 @@
-import {
-  Entity,
-  Column,
-  ObjectIdColumn,
-  ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
-  JoinColumn,
-} from 'typeorm';
-import { Product } from './product.entity';
-import { ObjectType, Field, ID } from '@nestjs/graphql';
-import JSON from 'graphql-type-json';
+import { Entity, Column } from 'typeorm';
+import { ObjectType, Field } from '@nestjs/graphql';
+import { BaseEntity } from '@app/entities/base';
 
 @Entity()
 @ObjectType()
-export class Review {
-  @ObjectIdColumn()
-  @Field(() => ID)
-  id: string;
-
+export class Review extends BaseEntity {
   @Column()
   @Field()
   text: string;
@@ -26,24 +13,11 @@ export class Review {
   @Field()
   rating: number;
 
-  @ManyToOne(() => Product)
-  @JoinColumn()
-  @Field(() => Product)
-  product: Product;
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  productId?: string;
 
   @Column()
   @Field()
   userId: string;
-
-  @Field(() => Date)
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @Field(() => Date)
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @Column({ nullable: true, type: 'json' })
-  @Field(() => JSON, { nullable: true })
-  extra: Record<string, any>;
 }

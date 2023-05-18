@@ -2,6 +2,34 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Cart {
+  createdAt: DateTime!
+  deletedAt: DateTime
+  extra: JSON
+  id: ID!
+  name: String
+  updatedAt: DateTime!
+  userId: String
+}
+
+input CreateCartInput {
+  """The name of the cart."""
+  name: String
+
+  """The ID of the user who owns the cart."""
+  userId: Int
+}
+
+input CreateOrderInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateProductInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 input CreateUserInput {
   email: String!
   extra: JSON
@@ -20,8 +48,17 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 scalar JSON
 
 type Mutation {
+  createCart(input: CreateCartInput): Cart!
+  createOrder(createOrderInput: CreateOrderInput!): Order!
+  createProduct(createProductInput: CreateProductInput!): Product!
   createUser(input: CreateUserInput!): User!
+  removeCart(id: String!): Cart!
+  removeOrder(id: Int!): Order!
+  removeProduct(id: Int!): Product!
   removeUser(id: Int!): User!
+  updateCart(input: UpdateCartInput!): Cart!
+  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
@@ -31,11 +68,12 @@ type Order {
   id: ID!
   status: String!
   updatedAt: DateTime!
-  user: User!
+  userId: String!
 }
 
 type Product {
   createdAt: DateTime!
+  deletedAt: DateTime
   description: String!
   extra: JSON
   id: ID!
@@ -45,8 +83,37 @@ type Product {
 }
 
 type Query {
+  cart(id: String!): Cart!
+  carts: [Cart!]!
+  order(id: Int!): Order!
+  orders: [Order!]!
+  product(id: Int!): Product!
+  products: [Product!]!
   user(id: Int!): User!
   users: [User!]!
+}
+
+input UpdateCartInput {
+  """The ID of the cart."""
+  id: String!
+
+  """The name of the cart."""
+  name: String
+
+  """The ID of the user who owns the cart."""
+  userId: Int
+}
+
+input UpdateOrderInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateProductInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: String!
 }
 
 input UpdateUserInput {
@@ -59,6 +126,7 @@ input UpdateUserInput {
 
 type User {
   createdAt: DateTime!
+  deletedAt: DateTime
   email: String!
   extra: JSON
   id: ID!

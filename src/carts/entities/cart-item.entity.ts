@@ -1,28 +1,10 @@
-import {
-  Entity,
-  Column,
-  ObjectIdColumn,
-  ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
-  JoinColumn,
-} from 'typeorm';
-import { Cart } from './cart.entity';
-import { ObjectType, Field, ID } from '@nestjs/graphql';
-import JSON from 'graphql-type-json';
+import { Entity, Column } from 'typeorm';
+import { ObjectType, Field } from '@nestjs/graphql';
+import { BaseEntity } from '@app/entities/base';
 
 @Entity()
 @ObjectType()
-export class CartItem {
-  @ObjectIdColumn()
-  @Field(() => ID)
-  id: string;
-
-  @ManyToOne(() => Cart)
-  @JoinColumn()
-  @Field(() => Cart)
-  order: Cart;
-
+export class CartItem extends BaseEntity {
   @Column()
   @Field()
   productId: string;
@@ -30,16 +12,4 @@ export class CartItem {
   @Column()
   @Field()
   quantity: number;
-
-  @Field(() => Date)
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @Field(() => Date)
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @Column({ nullable: true, type: 'json' })
-  @Field(() => JSON, { nullable: true })
-  extra: Record<string, any>;
 }

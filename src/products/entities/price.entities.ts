@@ -1,22 +1,11 @@
-import {
-  Entity,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ObjectIdColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { ObjectType, Field } from '@nestjs/graphql';
 import { Product } from './product.entity';
+import { BaseEntity } from '@app/entities/base';
 
 @Entity()
 @ObjectType()
-export class Price {
-  @ObjectIdColumn()
-  @Field(() => ID)
-  id: string;
-
+export class Price extends BaseEntity {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   @Field(() => Number)
   amount: number;
@@ -29,12 +18,4 @@ export class Price {
   @Field(() => Product)
   @JoinColumn()
   product: Product;
-
-  @Field(() => Date)
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @Field(() => Date)
-  @UpdateDateColumn()
-  updatedAt: Date;
 }
