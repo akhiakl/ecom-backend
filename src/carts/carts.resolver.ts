@@ -16,14 +16,12 @@ export class CartsResolver {
   }
 
   @Query(() => [Cart], { name: 'carts' })
-  findAll() {
+  getAllCarts() {
     return this.cartsService.findAll();
   }
 
   @Query(() => Cart, { name: 'cart' })
-  findOne(@Args('id') id: string) {
-    console.log({ id });
-
+  getCartById(@Args('id') id: string) {
     return this.cartsService.findById(id);
   }
 

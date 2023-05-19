@@ -41,13 +41,9 @@ export class CartsService {
     return await this.cartsRepository.save(cart);
   }
 
-  async remove(id: string): Promise<void> {
-    console.log({ id });
-
+  async remove(id: string): Promise<Cart> {
     const cart = await this.findById(id);
-    console.log({ cart });
-
     cart.deletedAt = new Date();
-    await this.cartsRepository.save(cart);
+    return this.cartsRepository.save(cart);
   }
 }

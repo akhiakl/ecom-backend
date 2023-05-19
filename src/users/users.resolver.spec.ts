@@ -2,22 +2,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersResolver } from './users.resolver';
 import { UsersService } from './users.service';
 import { User } from './entities';
-import { repositoryMockFactory } from '@app/test-utils/mock';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import { getRepositoryMock } from '@app/test-utils';
 
 describe('UsersResolver', () => {
   let resolver: UsersResolver;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        UsersResolver,
-        UsersService,
-        {
-          provide: getRepositoryToken(User),
-          useFactory: repositoryMockFactory,
-        },
-      ],
+      providers: [UsersResolver, UsersService, getRepositoryMock(User)],
     }).compile();
 
     resolver = module.get<UsersResolver>(UsersResolver);
