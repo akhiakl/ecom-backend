@@ -12,11 +12,20 @@ type Cart {
   userId: String
 }
 
+type CartPaginatedResponse {
+  """Indicates whether there is another page of results."""
+  hasNextPage: Boolean!
+  items: [Cart!]!
+
+  """Total number of Carts."""
+  total: Int!
+}
+
 input CreateCartInput {
-  """The name of the cart."""
+  """Name of the cart."""
   name: String
 
-  """The ID of the user who owns the cart."""
+  """ID of the user who owns the cart."""
   userId: Int
 }
 
@@ -48,14 +57,19 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 scalar JSON
 
 type Mutation {
+  """Create an empty cart with optional name and userId"""
   createCart(input: CreateCartInput): Cart!
   createOrder(createOrderInput: CreateOrderInput!): Order!
   createProduct(createProductInput: CreateProductInput!): Product!
   createUser(input: CreateUserInput!): User!
+
+  """Remove a cart by ID"""
   removeCart(id: String!): Cart!
   removeOrder(id: Int!): Order!
   removeProduct(id: Int!): Product!
   removeUser(id: Int!): User!
+
+  """Update a cart by ID"""
   updateCart(input: UpdateCartInput!): Cart!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
@@ -83,8 +97,19 @@ type Product {
 }
 
 type Query {
+  """Retrieve a cart by ID."""
   cart(id: String!): Cart!
-  carts: [Cart!]!
+
+  """
+  Retrieve all active carts. Can be paginated using page and limit arguments.
+  """
+  carts(
+    """The maximum number of results to return per page."""
+    limit: Int = 10
+
+    """The page number of results to return (starting at 1)."""
+    page: Int = 1
+  ): CartPaginatedResponse!
   order(id: Int!): Order!
   orders: [Order!]!
   product(id: Int!): Product!
@@ -97,10 +122,10 @@ input UpdateCartInput {
   """The ID of the cart."""
   id: String!
 
-  """The name of the cart."""
+  """Name of the cart."""
   name: String
 
-  """The ID of the user who owns the cart."""
+  """ID of the user who owns the cart."""
   userId: Int
 }
 

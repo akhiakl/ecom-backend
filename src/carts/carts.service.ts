@@ -5,6 +5,7 @@ import { Cart } from './entities/cart.entity';
 import { CreateCartInput } from './dto/create-cart.input';
 import { UpdateCartInput } from './dto/update-cart.input';
 import { ObjectId } from 'mongodb';
+import { CartPaginatedResponse } from './dto/paginated-cart.response';
 
 @Injectable()
 export class CartsService {
@@ -18,11 +19,21 @@ export class CartsService {
     cart.name = createCartInput?.name;
     cart.userId = createCartInput?.userId;
     // set any other properties as required
-    return await this.cartsRepository.save(cart);
+    return this.cartsRepository.save(cart);
   }
 
-  async findAll(): Promise<Cart[]> {
-    return await this.cartsRepository.find();
+  async findAll(page: number, limit: number): Promise<CartPaginatedResponse> {
+    const count = await this.cartsRepository.count();
+    const carts = await this.cartsRepository.find({
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+    const hasNextPage = count / limit < page;
+    return {
+      items: carts,
+      total: count,
+      hasNextPage,
+    };
   }
 
   async findById(id: string): Promise<Cart> {
@@ -38,7 +49,7 @@ export class CartsService {
   async update(id: string, updateCartInput: UpdateCartInput): Promise<Cart> {
     const cart = await this.findById(id);
     cart.name = updateCartInput.name ?? cart.name;
-    return await this.cartsRepository.save(cart);
+    return this.cartsRepository.save(cart);
   }
 
   async remove(id: string): Promise<Cart> {

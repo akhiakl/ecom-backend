@@ -64,7 +64,11 @@ describe('CartsResolver', () => {
 
   describe('getAllCarts', () => {
     it('should call findAll method and return the array of found entities', async () => {
-      const expectedResults = [getRandomMockCart(), getRandomMockCart()];
+      const expectedResults = {
+        items: [getRandomMockCart(), getRandomMockCart()],
+        total: 2,
+        hasNextPage: false,
+      };
       jest.spyOn(service, 'findAll').mockResolvedValue(expectedResults);
 
       expect(await resolver.getAllCarts()).toBe(expectedResults);
@@ -72,7 +76,11 @@ describe('CartsResolver', () => {
     });
 
     it('should return an empty array if no carts are found', async () => {
-      const expectedResults = [];
+      const expectedResults = {
+        items: [],
+        total: 0,
+        hasNextPage: false,
+      };
       jest.spyOn(service, 'findAll').mockResolvedValue(expectedResults);
 
       expect(await resolver.getAllCarts()).toBe(expectedResults);

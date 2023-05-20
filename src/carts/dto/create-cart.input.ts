@@ -4,10 +4,10 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 export class CreateCartInput {
   @Field(() => Int, {
     nullable: true,
-    description: 'The ID of the user who owns the cart.',
+    description: 'ID of the user who owns the cart.',
   })
   userId?: string;
 
-  @Field(() => String, { nullable: true, description: 'The name of the cart.' })
+  @Field(() => String, { nullable: true, description: 'Name of the cart.' })
   name?: string;
 }
