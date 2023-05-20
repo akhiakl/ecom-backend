@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CartsResolver } from './carts.resolver';
 import { CartsService } from './carts.service';
-import { CreateCartInput } from './dto/create-cart.input';
 import { Cart } from './entities';
 import { getRandomMockCart, getRepositoryMock } from '@app/test-utils';
 
@@ -20,7 +19,7 @@ describe('CartsResolver', () => {
 
   describe('createCart', () => {
     it('should call create method with provided input and return the created entity', async () => {
-      const input: CreateCartInput = {
+      const input = {
         name: 'test',
       };
       const expectedResult = getRandomMockCart({ name: input.name });
@@ -31,7 +30,7 @@ describe('CartsResolver', () => {
     });
 
     it('should throw an error if service throws an exception', async () => {
-      const input: CreateCartInput = {
+      const input = {
         name: 'test',
       };
       const expectedError = new Error('Failed to create cart');

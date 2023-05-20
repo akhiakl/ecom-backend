@@ -2,10 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Cart } from './entities/cart.entity';
-import { CreateCartInput } from './dto/create-cart.input';
-import { UpdateCartInput } from './dto/update-cart.input';
 import { ObjectId } from 'mongodb';
-import { CartPaginatedResponse } from './dto/paginated-cart.response';
+import { CartPaginatedResponse, CreateCartInput, UpdateCartInput } from './dto';
 
 @Injectable()
 export class CartsService {

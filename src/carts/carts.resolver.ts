@@ -1,10 +1,8 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { CartsService } from './carts.service';
 import { Cart } from './entities';
-import { CreateCartInput } from './dto/create-cart.input';
-import { UpdateCartInput } from './dto/update-cart.input';
-import { CartPaginatedResponse } from './dto/paginated-cart.response';
 import { PaginatedArgs } from '@app/dto/paginated-args';
+import { CreateCartInput, CartPaginatedResponse, UpdateCartInput } from './dto';
 
 @Resolver(() => Cart)
 export class CartsResolver {
