@@ -1,16 +1,16 @@
-import { Entity, Column } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 import JSON from 'graphql-type-json';
-import { BaseEntity } from './base';
+import { BaseSchema } from './base.schema';
+import { Prop, Schema } from '@nestjs/mongoose';
 
-@Entity()
+@Schema()
 @ObjectType()
-export class Image extends BaseEntity {
-  @Column()
+export class Image extends BaseSchema {
+  @Prop()
   @Field()
   filename: string;
 
-  @Column('json')
+  @Prop({ type: 'object' })
   @Field(() => JSON)
   meta: Record<string, any>;
 }

@@ -5,7 +5,7 @@ import {
   CartPaginatedResponse,
   UpdateCartInput,
 } from '../dto';
-import { Cart } from '../entities';
+import { Cart } from '../schemas';
 import { CartsService } from '../services/carts.service';
 
 @Resolver(() => Cart)

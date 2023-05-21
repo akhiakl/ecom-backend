@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { CartItemsService } from '../services/cart-items.service';
-import { Cart, CartItem } from '../entities';
+import { Cart, CartItem } from '../schemas';
 import { AddItemsToCartInput } from '../dto';
 
 @Resolver(() => CartItem)

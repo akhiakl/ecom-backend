@@ -1,23 +1,23 @@
-import { Entity, Column } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
-import { BaseEntity } from '@app/entities/base';
+import { BaseSchema } from '@app/schemas';
+import { Prop, Schema } from '@nestjs/mongoose';
 
-@Entity()
+@Schema()
 @ObjectType()
-export class Review extends BaseEntity {
-  @Column()
+export class Review extends BaseSchema {
+  @Prop()
   @Field()
   text: string;
 
-  @Column()
+  @Prop()
   @Field()
   rating: number;
 
-  @Column({ nullable: true })
+  @Prop({ nullable: true })
   @Field({ nullable: true })
   productId?: string;
 
-  @Column()
+  @Prop()
   @Field()
   userId: string;
 }

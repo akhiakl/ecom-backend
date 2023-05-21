@@ -51,23 +51,6 @@ input CreateCartItemInput {
   quantity: Int!
 }
 
-input CreateOrderInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input CreateProductInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input CreateUserInput {
-  email: String!
-  extra: JSON
-  name: String!
-  password: String!
-}
-
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -83,42 +66,12 @@ type Mutation {
 
   """Create an empty cart with optional name and userId"""
   createCart(input: CreateCartInput): Cart!
-  createOrder(createOrderInput: CreateOrderInput!): Order!
-  createProduct(createProductInput: CreateProductInput!): Product!
-  createUser(input: CreateUserInput!): User!
 
   """Remove a cart by ID"""
   removeCart(id: String!): Cart!
-  removeOrder(id: Int!): Order!
-  removeProduct(id: Int!): Product!
-  removeUser(id: Int!): User!
 
   """Update a cart by ID"""
   updateCart(input: UpdateCartInput!): Cart!
-  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
-  updateProduct(updateProductInput: UpdateProductInput!): Product!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-}
-
-type Order {
-  createdAt: DateTime!
-  deletedAt: DateTime
-  extra: JSON
-  id: ID!
-  status: String!
-  updatedAt: DateTime!
-  userId: String!
-}
-
-type Product {
-  createdAt: DateTime!
-  deletedAt: DateTime
-  description: String!
-  extra: JSON
-  id: ID!
-  name: String!
-  price: Float!
-  updatedAt: DateTime!
 }
 
 type Query {
@@ -135,12 +88,6 @@ type Query {
     """The page number of results to return (starting at 1)."""
     page: Int = 1
   ): CartPaginatedResponse!
-  order(id: Int!): Order!
-  orders: [Order!]!
-  product(id: Int!): Product!
-  products: [Product!]!
-  user(id: Int!): User!
-  users: [User!]!
 }
 
 input UpdateCartInput {
@@ -154,34 +101,4 @@ input UpdateCartInput {
 
   """ID of the user who owns the cart."""
   userId: Int
-}
-
-input UpdateOrderInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-input UpdateProductInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: String!
-}
-
-input UpdateUserInput {
-  email: String
-  extra: JSON
-  id: Int!
-  name: String
-  password: String
-}
-
-type User {
-  createdAt: DateTime!
-  deletedAt: DateTime
-  email: String!
-  extra: JSON
-  id: ID!
-  name: String!
-  updatedAt: DateTime!
 }

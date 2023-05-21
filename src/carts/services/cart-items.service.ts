@@ -1,48 +1,57 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { MongoRepository } from 'typeorm';
-import { CartItem } from '../entities/cart-item.entity';
-import { Cart } from '../entities';
+import { CartItem } from '../schemas/cart-item.schema';
 import { CartsService } from './carts.service';
-import { AddItemsToCartInput } from '../dto';
-import { ObjectId } from 'mongodb';
+import { AddItemsToCartInput } from '../dto/add-items-to-cart.input';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Cart } from '../schemas';
+
 @Injectable()
 export class CartItemsService {
   constructor(
-    @InjectRepository(CartItem)
-    private readonly cartItemsRepository: MongoRepository<CartItem>,
+    @InjectModel(CartItem.name) private cartItemModel: Model<CartItem>,
     private readonly cartsService: CartsService,
   ) { }
 
   async createOrUpdate({ cartId, items }: AddItemsToCartInput): Promise<Cart> {
-    const existingItems = await this.cartItemsRepository.find({
-      where: {
-        cartId: new ObjectId(cartId),
-      },
-    });
-    const cartItems = [];
-    for (const item of items) {
-      const existingitemIndex = existingItems.findIndex(
-        (eItem) => item.itemId === eItem.itemId,
-      );
-      console.log({ existingitemIndex }, { existingItems });
+    const cart = await this.cartsService.findById(cartId);
 
-      if (existingitemIndex === -1) {
-        cartItems.push(
-          this.cartItemsRepository.create({
-            ...item,
-            cartId: new ObjectId(cartId),
-          }),
-        );
+    const existingItems = cart.items;
+
+    console.log({ existingItems });
+
+    const updatedItems = [];
+    const bulkOps = [];
+    for (const item of items) {
+      const existingIndex = existingItems.findIndex(
+        (eItem) => eItem.itemId === item.itemId,
+      );
+      if (existingIndex === -1) {
+        bulkOps.push({
+          insertOne: {
+            document: {
+              ...item,
+              cartId,
+            },
+          },
+        });
       } else {
-        const existingItem = existingItems[existingitemIndex];
-        existingItem.quantity += item.quantity;
-        cartItems.push(existingItem);
+        bulkOps.push({
+          updateOne: {
+            filter: { _id: existingItems[existingIndex]._id },
+            update: { $inc: { quantity: item.quantity } },
+          },
+        });
       }
     }
-    console.log(cartItems, null, 2);
 
-    await this.cartItemsRepository.save(cartItems);
-    return this.cartsService.findById(cartId);
+    await this.cartItemModel
+      .bulkWrite(bulkOps, { ordered: false })
+      .then((bulkWriteOpResult) => {
+        console.log('BULK update OK');
+        console.log(JSON.stringify(bulkWriteOpResult, null, 2));
+      });
+
+    return cart;
   }
 }

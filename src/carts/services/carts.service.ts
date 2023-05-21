@@ -1,39 +1,41 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { MongoRepository } from 'typeorm';
-import { ObjectId } from 'mongodb';
 import {
   CreateCartInput,
   CartPaginatedResponse,
   UpdateCartInput,
 } from '../dto';
-import { Cart, CartItem } from '../entities';
+import { Cart, CartDocument, CartItem } from '../schemas';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class CartsService {
-  constructor(
-    @InjectRepository(Cart)
-    private cartsRepository: MongoRepository<Cart>,
-    @InjectRepository(CartItem)
-    private cartItemsRepository: MongoRepository<CartItem>,
-  ) { }
+  constructor(@InjectModel(Cart.name) private cartModel: Model<Cart>) { }
+
+  private async findByIdWithExeption(id: string): Promise<CartDocument> {
+    const cart = await this.cartModel.findById(id).populate('items').exec();
+    if (!cart) {
+      throw new NotFoundException(`Cart with ID '${id}' not found`);
+    }
+    return cart;
+  }
 
   async create(createCartInput?: CreateCartInput): Promise<Cart> {
-    const cart = new Cart();
-    cart.name = createCartInput?.name;
-    cart.userId = createCartInput?.userId;
-    // set any other properties as required
-    return this.cartsRepository.save(cart);
+    const cart = new this.cartModel(createCartInput);
+    await cart.save();
+    return cart;
   }
 
   async findAll(page: number, limit: number): Promise<CartPaginatedResponse> {
-    const [carts, count] = await this.cartsRepository.findAndCount({
-      take: limit,
-      skip: (page - 1) * limit,
-      relations: {
-        items: true,
-      },
-    });
+    const [carts, count] = await Promise.all([
+      this.cartModel
+        .find()
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .populate('items')
+        .exec(),
+      this.cartModel.countDocuments().exec(),
+    ]);
     const hasNextPage = count / limit < page;
     return {
       items: carts,
@@ -43,47 +45,18 @@ export class CartsService {
   }
 
   async findById(id: string): Promise<Cart> {
-    const cart = await this.cartsRepository
-      .aggregate([
-        {
-          $lookup: {
-            from: 'cart_item',
-            localField: '_id',
-            foreignField: 'cartId',
-            as: 'items',
-          },
-        },
-        {
-          $match: {
-            _id: new ObjectId(id),
-          },
-        },
-        {
-          $addFields: {
-            id: '$_id',
-            'items.id': { $getField: 'items.$._id' },
-          },
-        },
-      ])
-      .toArray();
-
-    console.log(JSON.stringify(cart, null, 2));
-
-    if (!cart) {
-      throw new NotFoundException(`Cart with ID '${id}' not found`);
-    }
-    return cart[0];
+    return this.findByIdWithExeption(id);
   }
 
   async update(id: string, updateCartInput: UpdateCartInput): Promise<Cart> {
-    const cart = await this.findById(id);
+    const cart = await this.findByIdWithExeption(id);
     cart.name = updateCartInput.name ?? cart.name;
-    return this.cartsRepository.save(cart);
+    return cart.save();
   }
 
   async remove(id: string): Promise<Cart> {
-    const cart = await this.findById(id);
+    const cart = await this.findByIdWithExeption(id);
     cart.deletedAt = new Date();
-    return this.cartsRepository.save(cart);
+    return cart.save();
   }
 }

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CartsResolver } from './carts.resolver';
-import { Cart } from '../entities';
+import { Cart } from '../schemas';
 import { getRandomMockCart, getRepositoryMock } from '@app/test-utils';
 import { CartsService } from '../services/carts.service';
 

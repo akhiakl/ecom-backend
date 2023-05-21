@@ -1,5 +1,5 @@
 import { PaginatedResponse } from '@app/dto';
-import { Cart } from '../entities';
+import { Cart } from '../schemas';
 import { ObjectType } from '@nestjs/graphql';
 
 @ObjectType()

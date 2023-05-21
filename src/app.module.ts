@@ -3,12 +3,9 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
 import { CartsModule } from './carts/carts.module';
-import { ProductsModule } from './products/products.module';
-import { OrdersModule } from './orders/orders.module';
 import GraphQLJSON from 'graphql-type-json';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -19,17 +16,8 @@ import GraphQLJSON from 'graphql-type-json';
       sortSchema: true,
       resolvers: { JSON: GraphQLJSON },
     }),
-    TypeOrmModule.forRoot({
-      type: process.env.DATABASE_TYPE as TypeOrmModuleOptions['type'],
-      url: process.env.DATABASE_URL,
-      useNewUrlParser: true,
-      autoLoadEntities: true,
-      synchronize: true,
-    }),
-    UsersModule,
+    MongooseModule.forRoot(process.env.DATABASE_URL),
     CartsModule,
-    ProductsModule,
-    OrdersModule,
   ],
 })
 export class AppModule { }

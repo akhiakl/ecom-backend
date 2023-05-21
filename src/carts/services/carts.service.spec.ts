@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CartsService } from './carts.service';
-import { Cart } from '../entities/cart.entity';
+import { Cart } from '../schemas/cart.schema';
 import { NotFoundException } from '@nestjs/common';
 import { getRandomMockCart, getRepositoryMock } from '@app/test-utils';
 import { CreateCartInput, UpdateCartInput } from '../dto';

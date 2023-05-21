@@ -1,4 +1,4 @@
-import { Cart } from '@app/carts/entities';
+import { Cart } from '@app/carts/schemas';
 import { ObjectId } from 'mongodb';
 
 export type RandomCartOptions = Partial<Omit<Cart, 'deletedAt'>> & {
