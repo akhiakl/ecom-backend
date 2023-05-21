@@ -6,7 +6,7 @@ import { User } from './entities';
 
 @Resolver(() => User)
 export class UsersResolver {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Mutation(() => User)
   createUser(@Args('input') input: CreateUserInput) {
