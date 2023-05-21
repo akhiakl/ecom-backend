@@ -2,11 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CartsService } from './carts.service';
-import { Cart } from './entities/cart.entity';
-import { CreateCartInput } from './dto/create-cart.input';
-import { UpdateCartInput } from './dto/update-cart.input';
+import { Cart } from '../entities/cart.entity';
 import { NotFoundException } from '@nestjs/common';
 import { getRandomMockCart, getRepositoryMock } from '@app/test-utils';
+import { CreateCartInput, UpdateCartInput } from '../dto';
 
 describe('CartsService', () => {
   let service: CartsService;
@@ -45,7 +44,7 @@ describe('CartsService', () => {
 
       jest.spyOn(cartsRepository, 'find').mockResolvedValue(expectedCarts);
 
-      const result = await service.findAll();
+      const result = await service.findAll(1, 10);
 
       expect(result).toEqual(expectedCarts);
       expect(cartsRepository.find).toHaveBeenCalled();

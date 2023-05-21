@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CartsResolver } from './carts.resolver';
-import { CartsService } from './carts.service';
-import { Cart } from './entities';
+import { Cart } from '../entities';
 import { getRandomMockCart, getRepositoryMock } from '@app/test-utils';
+import { CartsService } from '../services/carts.service';
 
 describe('CartsResolver', () => {
   let resolver: CartsResolver;

@@ -1,3 +1,4 @@
+export * from './update-cart.input';
 import { CreateCartInput } from './create-cart.input';
 import { InputType, Field, PartialType } from '@nestjs/graphql';
 

@@ -6,7 +6,7 @@ import { UpdateProductInput } from './dto/update-product.input';
 
 @Resolver(() => Product)
 export class ProductsResolver {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
 
   @Mutation(() => Product)
   createProduct(

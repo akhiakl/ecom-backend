@@ -1,23 +1,11 @@
-import {
-  Entity,
-  Column,
-  ObjectIdColumn,
-  ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Order } from './order.entity';
-import { ObjectType, Field, ID } from '@nestjs/graphql';
-import JSON from 'graphql-type-json';
+import { ObjectType, Field } from '@nestjs/graphql';
+import { BaseEntity } from '@app/entities/base';
 
 @Entity()
 @ObjectType()
-export class OrderItem {
-  @ObjectIdColumn()
-  @Field(() => ID)
-  id: string;
-
+export class OrderItem extends BaseEntity {
   @ManyToOne(() => Order)
   @JoinColumn()
   @Field(() => Order)
@@ -30,16 +18,4 @@ export class OrderItem {
   @Column()
   @Field()
   quantity: number;
-
-  @Field(() => Date)
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @Field(() => Date)
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @Column({ nullable: true, type: 'json' })
-  @Field(() => JSON, { nullable: true })
-  extra: Record<string, any>;
 }

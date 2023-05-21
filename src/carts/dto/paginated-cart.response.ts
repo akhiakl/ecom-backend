@@ -1,4 +1,4 @@
-import { PaginatedResponse } from '@app/dto/paginated-response';
+import { PaginatedResponse } from '@app/dto';
 import { Cart } from '../entities';
 import { ObjectType } from '@nestjs/graphql';
 

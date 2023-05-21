@@ -7,20 +7,21 @@ import {
   Column,
 } from 'typeorm';
 import JSON from 'graphql-type-json';
+import { ObjectId } from 'mongodb';
 
 @ObjectType()
 export abstract class BaseEntity {
   @ObjectIdColumn()
   @Field(() => ID)
-  id: string;
+  id: ObjectId;
 
   @CreateDateColumn()
   @Field(() => Date)
-  createdAt: Date;
+  createdAt?: Date;
 
   @UpdateDateColumn()
   @Field(() => Date)
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @DeleteDateColumn({ nullable: true })
   @Field(() => Date, { nullable: true })
