@@ -1,30 +1,34 @@
 import {
   Entity,
   Column,
+  ObjectIdColumn,
+  ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  ObjectIdColumn,
+  JoinColumn,
 } from 'typeorm';
+import { Cart } from './cart.model';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import JSON from 'graphql-type-json';
 
 @Entity()
 @ObjectType()
-export class Cart {
+export class CartItem {
   @ObjectIdColumn()
   @Field(() => ID)
   id: string;
 
-  @Column()
-  @Field()
-  userId: string;
+  @ManyToOne(() => Cart)
+  @JoinColumn()
+  @Field(() => Cart)
+  cart: Cart;
 
   @Column()
   @Field()
   productId: string;
 
-  @Column({ default: 1 })
-  @Field(() => Number)
+  @Column()
+  @Field()
   quantity: number;
 
   @Field(() => Date)

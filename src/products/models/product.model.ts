@@ -17,15 +17,15 @@ export class Product {
 
   @Column()
   @Field()
-  name: string;
+  title: string;
+
+  @Column()
+  @Field()
+  sku: string;
 
   @Column()
   @Field()
   description: string;
-
-  @Column()
-  @Field()
-  price: number;
 
   @Field(() => Date)
   @CreateDateColumn()
@@ -36,6 +36,6 @@ export class Product {
   updatedAt: Date;
 
   @Column({ nullable: true, type: 'json' })
-  @Field(() => JSON, { nullable: true })
+  @Field(() => JSON, { nullable: true, description: 'A meta data field containing additional JSON data' })
   extra: Record<string, any>;
 }

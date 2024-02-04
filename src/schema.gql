@@ -2,10 +2,30 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Cart {
+  extra: JSON
+  id: ID!
+  total: Total!
+  updatedAt: DateTime!
+  userId: String
+}
+
+input CreateCartInput {
+  extra: JSON
+  productId: ID!
+  quantity: Float!
+  userId: String!
+}
+
+input CreateOrderInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 input CreateUserInput {
   email: String!
   extra: JSON
-  name: String!
+  name: UserNameInput!
   password: String!
 }
 
@@ -20,9 +40,26 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 scalar JSON
 
 type Mutation {
+  createCart(input: CreateCartInput!): Cart!
+  createOrder(createOrderInput: CreateOrderInput!): Order!
   createUser(input: CreateUserInput!): User!
+  removeCart(id: Int!): Cart!
+  removeOrder(id: Int!): Order!
   removeUser(id: Int!): User!
+  updateCart(input: UpdateCartInput!): Cart!
+  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   updateUser(updateUserInput: UpdateUserInput!): User!
+}
+
+interface Name {
+  """First name"""
+  firstname: String!
+
+  """Last name"""
+  lastname: String!
+
+  """Middle name"""
+  middlename: String
 }
 
 type Order {
@@ -31,37 +68,101 @@ type Order {
   id: ID!
   status: String!
   updatedAt: DateTime!
-  user: User!
+  userId: String!
 }
 
 type Product {
   createdAt: DateTime!
   description: String!
+
+  """A meta data field containing additional JSON data"""
   extra: JSON
   id: ID!
-  name: String!
-  price: Float!
+  sku: String!
+  title: String!
   updatedAt: DateTime!
 }
 
 type Query {
+  cart(id: Int!): Cart!
+  order(id: Int!): Order!
+  orders: [Order!]!
+  product(id: Int!): Product!
+  products: [Product!]!
   user(id: Int!): User!
-  users: [User!]!
+}
+
+type Total {
+  """The total amount for the customer to pay"""
+  subtotal: Float!
+
+  """The amount, before taxes and discounts, for the customer to pay"""
+  total: Float!
+
+  """The tax amount for the customer to pay at checkout"""
+  totalTax: Float!
+}
+
+input UpdateCartInput {
+  extra: JSON
+  id: Int!
+  productId: ID
+  quantity: Float
+  userId: String
+}
+
+input UpdateOrderInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 input UpdateUserInput {
   email: String
   extra: JSON
-  id: Int!
-  name: String
+  id: ID!
+  name: UserNameInput
   password: String
 }
 
 type User {
+  """User created time"""
   createdAt: DateTime!
+
+  """User email address"""
   email: String!
+
+  """A meta data field containing additional JSON data"""
   extra: JSON
+
+  """Unique identifier"""
   id: ID!
-  name: String!
+
+  """Unique identifier"""
+  name: UserName!
+
+  """User updated time"""
   updatedAt: DateTime!
+}
+
+type UserName implements Name {
+  """First name"""
+  firstname: String!
+
+  """Last name"""
+  lastname: String!
+
+  """Middle name"""
+  middlename: String
+}
+
+input UserNameInput {
+  """First name input"""
+  firstname: String!
+
+  """Last name input"""
+  lastname: String!
+
+  """Middle name input. (optional)"""
+  middlename: String
 }

@@ -1,43 +1,26 @@
 import {
   Entity,
   Column,
-  ObjectIdColumn,
-  ManyToOne,
-  CreateDateColumn,
   UpdateDateColumn,
-  JoinColumn,
+  ObjectIdColumn,
 } from 'typeorm';
-import { Product } from './product.entity';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import JSON from 'graphql-type-json';
+import { Total } from './cart-total.model';
 
 @Entity()
 @ObjectType()
-export class Review {
+export class Cart {
   @ObjectIdColumn()
   @Field(() => ID)
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  userId?: string;
+
   @Field()
-  text: string;
-
-  @Column()
-  @Field()
-  rating: number;
-
-  @ManyToOne(() => Product)
-  @JoinColumn()
-  @Field(() => Product)
-  product: Product;
-
-  @Column()
-  @Field()
-  userId: string;
-
-  @Field(() => Date)
-  @CreateDateColumn()
-  createdAt: Date;
+  total: Total;
 
   @Field(() => Date)
   @UpdateDateColumn()

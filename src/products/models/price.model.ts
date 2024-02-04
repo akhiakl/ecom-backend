@@ -1,35 +1,34 @@
 import {
   Entity,
   Column,
-  ObjectIdColumn,
-  ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  ObjectIdColumn,
+  ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Cart } from './cart.entity';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import JSON from 'graphql-type-json';
+import { Product } from './product.model';
 
 @Entity()
 @ObjectType()
-export class CartItem {
+export class Price {
   @ObjectIdColumn()
   @Field(() => ID)
   id: string;
 
-  @ManyToOne(() => Cart)
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Field(() => Number)
+  amount: number;
+
+  @Column()
+  @Field()
+  currency: string;
+
+  @ManyToOne(() => Product)
+  @Field(() => Product)
   @JoinColumn()
-  @Field(() => Cart)
-  order: Cart;
-
-  @Column()
-  @Field()
-  productId: string;
-
-  @Column()
-  @Field()
-  quantity: number;
+  product: Product;
 
   @Field(() => Date)
   @CreateDateColumn()
@@ -38,8 +37,4 @@ export class CartItem {
   @Field(() => Date)
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @Column({ nullable: true, type: 'json' })
-  @Field(() => JSON, { nullable: true })
-  extra: Record<string, any>;
 }

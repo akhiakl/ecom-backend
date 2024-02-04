@@ -1,30 +1,39 @@
 import {
   Entity,
   Column,
+  ObjectIdColumn,
+  ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  ObjectIdColumn,
+  JoinColumn,
 } from 'typeorm';
+import { Product } from './product.model';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import JSON from 'graphql-type-json';
 
 @Entity()
 @ObjectType()
-export class User {
+export class Review {
   @ObjectIdColumn()
   @Field(() => ID)
   id: string;
 
   @Column()
   @Field()
-  name: string;
+  text: string;
 
   @Column()
   @Field()
-  email: string;
+  rating: number;
+
+  @ManyToOne(() => Product)
+  @JoinColumn()
+  @Field(() => Product)
+  product: Product;
 
   @Column()
-  password: string;
+  @Field()
+  userId: string;
 
   @Field(() => Date)
   @CreateDateColumn()
@@ -36,5 +45,5 @@ export class User {
 
   @Column({ nullable: true, type: 'json' })
   @Field(() => JSON, { nullable: true })
-  extra?: Record<string, any>;
+  extra: Record<string, any>;
 }
