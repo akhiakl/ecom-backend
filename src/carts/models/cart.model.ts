@@ -1,9 +1,4 @@
-import {
-  Entity,
-  Column,
-  UpdateDateColumn,
-  ObjectIdColumn,
-} from 'typeorm';
+import { Entity, Column, UpdateDateColumn, ObjectIdColumn } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import JSON from 'graphql-type-json';
 import { Total } from './cart-total.model';

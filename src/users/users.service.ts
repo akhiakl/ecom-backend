@@ -8,7 +8,7 @@ import { UpdateUserInput, CreateUserInput } from './dto';
 export class UsersService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-  ) { }
+  ) {}
 
   async findOne(id: string): Promise<User> {
     return this.userRepository.findOne({ where: { id } });

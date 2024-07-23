@@ -8,7 +8,7 @@ import { CreateCartInput, UpdateCartInput } from './dto';
 export class CartsService {
   constructor(
     @InjectRepository(Cart) private cartRepository: Repository<Cart>,
-  ) { }
+  ) {}
 
   async findOne(id: string): Promise<Cart> {
     return this.cartRepository.findOne({ where: { id } });

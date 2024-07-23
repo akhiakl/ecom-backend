@@ -22,7 +22,6 @@ import GraphQLJSON from 'graphql-type-json';
     TypeOrmModule.forRoot({
       type: process.env.DATABASE_TYPE as TypeOrmModuleOptions['type'],
       url: process.env.DATABASE_URL,
-      useNewUrlParser: true,
       autoLoadEntities: true,
       synchronize: true,
     }),

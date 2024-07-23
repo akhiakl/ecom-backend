@@ -18,7 +18,7 @@ export class CreateUserInput {
     minNumbers: 1,
     minLowercase: 1,
     minUppercase: 1,
-    minSymbols: 1
+    minSymbols: 1,
   })
   password?: string;
 

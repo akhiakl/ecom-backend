@@ -5,7 +5,7 @@ import { CreateCartInput, UpdateCartInput } from './dto';
 
 @Resolver(() => Cart)
 export class CartsResolver {
-  constructor(private readonly cartsService: CartsService) { }
+  constructor(private readonly cartsService: CartsService) {}
 
   @Mutation(() => Cart)
   createCart(@Args('input') input: CreateCartInput) {

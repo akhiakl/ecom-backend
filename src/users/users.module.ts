@@ -8,4 +8,4 @@ import { User } from './models';
   providers: [UsersResolver, UsersService],
   imports: [TypeOrmModule.forFeature([User])],
 })
-export class UsersModule { }
+export class UsersModule {}

@@ -38,6 +38,9 @@ export class User {
   updatedAt: Date;
 
   @Column({ nullable: true, type: 'json' })
-  @Field(() => JSON, { nullable: true, description: 'A meta data field containing additional JSON data' })
+  @Field(() => JSON, {
+    nullable: true,
+    description: 'A meta data field containing additional JSON data',
+  })
   extra?: Record<string, any>;
 }

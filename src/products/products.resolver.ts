@@ -4,7 +4,7 @@ import { Product } from './models';
 
 @Resolver(() => Product)
 export class ProductsResolver {
-  constructor(private readonly productsService: ProductsService) { }
+  constructor(private readonly productsService: ProductsService) {}
 
   @Query(() => [Product], { name: 'products' })
   findAll() {

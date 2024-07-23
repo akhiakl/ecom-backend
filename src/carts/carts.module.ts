@@ -8,4 +8,4 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   providers: [CartsResolver, CartsService],
   imports: [TypeOrmModule.forFeature([Cart])],
 })
-export class CartsModule { }
+export class CartsModule {}

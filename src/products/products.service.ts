@@ -7,8 +7,7 @@ import { Product } from './models';
 export class ProductsService {
   constructor(
     @InjectRepository(Product) private productRepository: Repository<Product>,
-  ) { }
-
+  ) {}
 
   async findAll(): Promise<Product[]> {
     return this.productRepository.find();

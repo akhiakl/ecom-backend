@@ -8,4 +8,4 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   providers: [ProductsResolver, ProductsService],
   imports: [TypeOrmModule.forFeature([Product])],
 })
-export class ProductsModule { }
+export class ProductsModule {}

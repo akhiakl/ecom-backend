@@ -42,12 +42,18 @@ scalar JSON
 type Mutation {
   createCart(input: CreateCartInput!): Cart!
   createOrder(createOrderInput: CreateOrderInput!): Order!
+
+  """Create a new user."""
   createUser(input: CreateUserInput!): User!
   removeCart(id: Int!): Cart!
   removeOrder(id: Int!): Order!
+
+  """Remove a user by ID."""
   removeUser(id: Int!): User!
   updateCart(input: UpdateCartInput!): Cart!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
+
+  """Update an existing user."""
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
@@ -89,6 +95,8 @@ type Query {
   orders: [Order!]!
   product(id: Int!): Product!
   products: [Product!]!
+
+  """Find a user by ID."""
   user(id: Int!): User!
 }
 
