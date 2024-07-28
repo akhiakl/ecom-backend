@@ -8,11 +8,14 @@ import { UsersModule } from './users/users.module';
 import { CartsModule } from './carts/carts.module';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
+import { AuthModule } from './auth/auth.module';
+import { AppConfigModule } from './app-config/app-config.module';
+import { CacheModule } from './cache/cache.module';
+import { HealthModule } from './health/health.module';
 import GraphQLJSON from 'graphql-type-json';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -29,6 +32,10 @@ import GraphQLJSON from 'graphql-type-json';
     CartsModule,
     ProductsModule,
     OrdersModule,
+    AuthModule,
+    AppConfigModule,
+    CacheModule,
+    HealthModule,
   ],
 })
 export class AppModule {}

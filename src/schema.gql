@@ -2,6 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AuthPayload {
+  accessToken: String!
+
+  """Access token expiry time in seconds"""
+  expiresIn: Float!
+  refreshToken: String!
+
+  """Refresh token expiry time in seconds"""
+  refreshTokenExpiresIn: Float!
+  tokenType: String!
+  user: User!
+}
+
 type Cart {
   extra: JSON
   id: ID!
@@ -22,13 +35,6 @@ input CreateOrderInput {
   exampleField: Int!
 }
 
-input CreateUserInput {
-  email: String!
-  extra: JSON
-  name: UserNameInput!
-  password: String!
-}
-
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -39,17 +45,23 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON
 
+input LoginInput {
+  email: String!
+  password: String!
+}
+
 type Mutation {
   createCart(input: CreateCartInput!): Cart!
   createOrder(createOrderInput: CreateOrderInput!): Order!
-
-  """Create a new user."""
-  createUser(input: CreateUserInput!): User!
+  refreshToken(input: TokenInput!): TokenPayload!
+  register(input: RegisterInput!): AuthPayload!
   removeCart(id: Int!): Cart!
   removeOrder(id: Int!): Order!
 
   """Remove a user by ID."""
   removeUser(id: Int!): User!
+  revokeToken(input: TokenInput!): Boolean!
+  signIn(input: LoginInput!): AuthPayload!
   updateCart(input: UpdateCartInput!): Cart!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
 
@@ -98,6 +110,29 @@ type Query {
 
   """Find a user by ID."""
   user(id: Int!): User!
+}
+
+input RegisterInput {
+  email: String!
+  extra: JSON
+  name: UserNameInput!
+  password: String!
+}
+
+input TokenInput {
+  refreshToken: String!
+}
+
+type TokenPayload {
+  accessToken: String!
+
+  """Access token expiry time in seconds"""
+  expiresIn: Float!
+  refreshToken: String!
+
+  """Refresh token expiry time in seconds"""
+  refreshTokenExpiresIn: Float!
+  tokenType: String!
 }
 
 type Total {
