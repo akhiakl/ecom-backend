@@ -1,5 +1,5 @@
+import { OPERATIONS_TIMEOUT } from '../messages';
 import { promiseTimeout } from './promise-timeout';
-import { OPERATIONS_TIMEOUT } from '@health/messages';
 
 describe('promiseTimeout', () => {
   beforeEach(() => {
@@ -7,7 +7,7 @@ describe('promiseTimeout', () => {
   });
 
   const waitPromise = (ms: number) =>
-    new Promise<string>(resolve => {
+    new Promise<string>((resolve) => {
       setTimeout(() => resolve('response'), ms);
     });
 

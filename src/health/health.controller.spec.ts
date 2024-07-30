@@ -1,11 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HealthController } from './health.controller';
+import { AppConfigModule } from '@app/app-config/app-config.module';
+import { TerminusModule } from '@nestjs/terminus';
+import { RedisHealthIndicator } from './redis/redis.health';
 
 describe('HealthController', () => {
   let controller: HealthController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [TerminusModule, AppConfigModule],
+      providers: [RedisHealthIndicator],
       controllers: [HealthController],
     }).compile();
 
