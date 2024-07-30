@@ -12,7 +12,6 @@ import {
 } from './utils';
 import { RedisCheckSettings } from './redis-check-settings.interface';
 import { ABNORMALLY_MEMORY_USAGE } from './messages';
-import { RedisService } from '@app/cache/redis/redis.service';
 import { createClient, RedisClientType } from '@redis/client';
 import { AppConfigService } from '@app/app-config/app-config.service';
 /**

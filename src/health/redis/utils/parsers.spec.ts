@@ -6,7 +6,7 @@ describe('removeLineBreaks', () => {
         It has some line breaks that will be removed
         using Javascript.`;
     expect(removeLineBreaks(text)).toBe(
-      "Here's some text. It has some line breaks that will be removed using Javascript."
+      "Here's some text. It has some line breaks that will be removed using Javascript.",
     );
   });
 });

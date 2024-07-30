@@ -3,4 +3,5 @@
  *
  * @param value - Any value
  */
-export const isNullish = (value: unknown): value is undefined | null => value === undefined || value === null;
+export const isNullish = (value: unknown): value is undefined | null =>
+  value === undefined || value === null;
