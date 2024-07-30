@@ -20,7 +20,7 @@ export class CreateUserInput {
     minUppercase: 1,
     minSymbols: 1,
   })
-  password?: string;
+  password: string;
 
   @Field(() => JSON, { nullable: true })
   extra?: Record<string, any>;

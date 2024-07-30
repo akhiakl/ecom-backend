@@ -5,5 +5,5 @@ import { TokenPayload } from './token-payload.model';
 @ObjectType()
 export class AuthPayload extends TokenPayload {
   @Field(() => User)
-  user: User;
+  user: Omit<User, 'password'>;
 }

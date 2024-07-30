@@ -11,7 +11,7 @@ export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => AuthPayload)
-  signIn(@Args('input') loginInput: LoginInput): Promise<any> {
+  signIn(@Args('input') loginInput: LoginInput) {
     return this.authService.signIn(loginInput);
   }
 
@@ -21,7 +21,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => TokenPayload)
-  refreshToken(@Args('input') tokenInput: TokenInput): Promise<any> {
+  refreshToken(@Args('input') tokenInput: TokenInput) {
     return this.authService.refreshToken(tokenInput.refreshToken);
   }
 

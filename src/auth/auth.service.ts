@@ -28,9 +28,10 @@ export class AuthService {
     };
   }
 
-  async signIn({ email, password }: LoginInput): Promise<any> {
-    const user = await this.usersService.findOneByEmail(email);
-    const isMatch = await bcrypt.compare(password, user?.password);
+  async signIn({ email, password }: LoginInput) {
+    const { password: userPassword, ...user } =
+      await this.usersService.findOneByEmail(email);
+    const isMatch = await bcrypt.compare(password, userPassword);
     if (!isMatch) {
       throw new UnauthorizedException();
     }
@@ -54,7 +55,8 @@ export class AuthService {
 
   async register(input: CreateUserInput) {
     const hashedPassword = await bcrypt.hash(input.password, 12);
-    const user = await this.usersService.create({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _, ...user } = await this.usersService.create({
       ...input,
       password: hashedPassword,
     });
